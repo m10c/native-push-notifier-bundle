@@ -1,0 +1,46 @@
+{
+    "name": "m10c/native-push-notifier-bundle",
+    "description": "Native FCM/APNs integration for Symfony Notifier",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "require": {
+        "google/auth": "^1.0",
+        "lcobucci/jwt": "^5.0",
+        "symfony/cache-contracts": "^3.0",
+        "symfony/clock": "^5.4 | ^6.0 | ^7.0",
+        "symfony/config": "^5.4 | ^6.0 | ^7.0",
+        "symfony/dependency-injection": "^5.4 | ^6.0 | ^7.0",
+        "symfony/event-dispatcher-contracts": "^3.0",
+        "symfony/http-client-contracts": "^3.0",
+        "symfony/http-kernel": "^5.4 | ^6.0 | ^7.0",
+        "symfony/notifier": "^5.4 | ^6.0 | ^7.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.57",
+        "phpstan/phpstan": "^1.11",
+        "symfony/phpunit-bridge": "^7.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "M10c\\NativePushNotifierBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "M10c\\NativePushNotifierBundle\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "cs": "php vendor/bin/php-cs-fixer fix",
+        "phpstan": "php vendor/bin/phpstan",
+        "phpunit": "php vendor/bin/simple-phpunit",
+
+        "test": [
+            "@phpstan",
+            "@phpunit"
+        ]
+    }
+}
