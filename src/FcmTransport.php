@@ -58,7 +58,7 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
 
         foreach ($options->data as $key => $datum) {
             if (!is_string($datum)) {
-                throw new InvalidArgumentException("FCM only supports string keys & values, received bad data for $key");
+                throw new InvalidArgumentException("FCM data only supports string keys & values, received bad data for $key");
             }
         }
 

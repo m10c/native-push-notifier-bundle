@@ -50,7 +50,10 @@ final class NativePushOptions implements MessageOptionsInterface
     }
 
     /**
-     * @param mixed[] $data
+     * Using string:string, as in the lowest common denominator of FCM:
+     * https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message.FIELDS.data
+     * 
+     * @param array<string, string> $data
      */
     public function data(array $data): static
     {
