@@ -13,7 +13,7 @@
         "symfony/event-dispatcher-contracts": "^3.0",
         "symfony/http-client-contracts": "^3.0",
         "symfony/http-kernel": "^5.4 | ^6.0 | ^7.0",
-        "symfony/notifier": "^5.4 | ^6.0 | ^7.0"
+        "symfony/notifier": "^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.57",

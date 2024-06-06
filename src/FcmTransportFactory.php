@@ -16,9 +16,10 @@ final class FcmTransportFactory extends AbstractTransportFactory
 {
     public function __construct(
         private readonly CacheInterface $cache,
-        protected ?EventDispatcherInterface $dispatcher = null,
-        protected ?HttpClientInterface $client = null
+        ?EventDispatcherInterface $dispatcher = null,
+        ?HttpClientInterface $client = null
     ) {
+        parent::__construct($dispatcher, $client);
     }
 
     public function create(Dsn $dsn): FcmTransport

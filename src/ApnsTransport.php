@@ -45,7 +45,7 @@ final class ApnsTransport extends AbstractTransport implements TexterInterface
          */
         private readonly string $topic,
         private readonly CacheInterface $cache,
-        protected ?HttpClientInterface $client = null,
+        ?HttpClientInterface $client = null,
         ?EventDispatcherInterface $dispatcher = null)
     {
         parent::__construct($client, $dispatcher);
