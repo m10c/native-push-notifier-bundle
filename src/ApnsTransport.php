@@ -100,7 +100,7 @@ final class ApnsTransport extends AbstractTransport implements TexterInterface
                         'body' => $message->getContent(),
                     ],
                 ],
-                'data' => $options->data,
+                ...$options->data,
             ],
         ]);
 
