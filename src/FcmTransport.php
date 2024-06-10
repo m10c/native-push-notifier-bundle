@@ -90,7 +90,7 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
                         'title' => $message->getSubject(),
                         'body' => $message->getContent(),
                     ],
-                    'data' => $options->data,
+                    ...(empty($options->data) ? [] : ['data' => $options->data]),
                 ],
             ],
         ]);
