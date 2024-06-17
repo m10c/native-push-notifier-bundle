@@ -108,7 +108,7 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
         }
 
         if (200 !== $statusCode) {
-            throw new TransportException("Unable to send the Push, FCM responded with {$statusCode}.", $response);
+            throw new TransportException("Unable to send the Push to token: {$token}, FCM responded with {$statusCode}.", $response);
         }
 
         $responseArr = $response->toArray();
