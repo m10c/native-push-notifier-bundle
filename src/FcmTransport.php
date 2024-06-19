@@ -29,7 +29,7 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
         private readonly string $privateKey,
         private readonly string $projectId,
         private readonly CacheInterface $cache,
-        protected ?HttpClientInterface $client = null,
+        ?HttpClientInterface $client = null,
         ?EventDispatcherInterface $dispatcher = null)
     {
         parent::__construct($client, $dispatcher);
