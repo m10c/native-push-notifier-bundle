@@ -14,14 +14,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class ApnsTransportFactory extends AbstractTransportFactory
 {
-    private readonly CacheInterface $cache;
-
     public function __construct(
-        CacheInterface $cache,
+        private readonly CacheInterface $cache,
         ?EventDispatcherInterface $dispatcher = null,
         ?HttpClientInterface $client = null
     ) {
-        $this->cache = $cache;
         parent::__construct($dispatcher, $client);
     }
 

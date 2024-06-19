@@ -1,5 +1,0 @@
-framework:
-  notifier:
-    texter_transports:
-      apns: '%env(NOTIFIER_APNS_DSN)%'
-      fcm: '%env(NOTIFIER_FCM_DSN)%'
