@@ -78,6 +78,14 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
             throw new InvalidArgumentException(sprintf('The "%s" transport requires an HttpClient.', __CLASS__));
         }
 
+        $notificationJson = [];
+        if ('' !== $message->getSubject()) {
+            $notificationJson['title'] = $message->getSubject();
+        }
+        if ('' !== $message->getContent()) {
+            $notificationJson['body'] = $message->getContent();
+        }
+
         $response = $this->client->request('POST', $endpoint, [
             'headers' => [
                 'Authorization' => "Bearer {$accessToken}",
@@ -86,10 +94,7 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
             'json' => [
                 'message' => [
                     'token' => $token,
-                    'notification' => [
-                        'title' => $message->getSubject(),
-                        'body' => $message->getContent(),
-                    ],
+                    ...(empty($notificationJson) ? [] : ['notification' => $notificationJson]),
                     ...(empty($options->data) ? [] : ['data' => $options->data]),
                 ],
             ],
