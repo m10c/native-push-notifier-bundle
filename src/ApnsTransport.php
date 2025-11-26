@@ -92,6 +92,7 @@ final class ApnsTransport extends AbstractTransport implements TexterInterface
             'headers' => [
                 'apns-topic' => $this->topic,
                 'authorization' => "bearer {$jwt}",
+                ...(null !== $options->collapseKey ? ['apns-collapse-id' => $options->collapseKey] : []),
             ],
             'json' => [
                 'aps' => [
