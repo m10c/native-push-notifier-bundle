@@ -15,11 +15,12 @@ final class NativePushOptions implements MessageOptionsInterface
         public array $data = [],
         public ?NativePushPriority $priority = null,
         public ?string $token = null,
+        public ?string $collapseKey = null,
     ) {
     }
 
     /**
-     * @return array{data: mixed[], priority: ?NativePushPriority, token: ?string}
+     * @return array{data: mixed[], priority: ?NativePushPriority, token: ?string, collapseKey: ?string}
      */
     public function toArray(): array
     {
@@ -27,6 +28,7 @@ final class NativePushOptions implements MessageOptionsInterface
             'data' => $this->data,
             'priority' => $this->priority,
             'token' => $this->token,
+            'collapseKey' => $this->collapseKey,
         ];
     }
 
@@ -45,6 +47,13 @@ final class NativePushOptions implements MessageOptionsInterface
     public function priority(NativePushPriority $priority): static
     {
         $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function collapseKey(string $key): static
+    {
+        $this->collapseKey = $key;
 
         return $this;
     }
