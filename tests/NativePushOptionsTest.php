@@ -16,12 +16,14 @@ class NativePushOptionsTest extends TestCase
             data: ['foo' => 'bar'],
             priority: NativePushPriority::High,
             token: 'abc123',
+            collapseKey: 'new_message',
         );
 
         $this->assertEquals([
             'data' => ['foo' => 'bar'],
             'priority' => NativePushPriority::High,
             'token' => 'abc123',
+            'collapseKey' => 'new_message',
         ], $options->toArray());
     }
 
@@ -31,10 +33,18 @@ class NativePushOptionsTest extends TestCase
         $options->data(['foo' => 'bar']);
         $options->priority(NativePushPriority::High);
         $options->token('abc123');
+        $options->collapseKey('new_message');
 
         $this->assertEquals(['foo' => 'bar'], $options->data);
         $this->assertEquals(NativePushPriority::High, $options->priority);
         $this->assertEquals('abc123', $options->token);
         $this->assertEquals('abc123', $options->getRecipientId());
+        $this->assertEquals('new_message', $options->collapseKey);
+        $this->assertEquals([
+            'data' => ['foo' => 'bar'],
+            'priority' => NativePushPriority::High,
+            'token' => 'abc123',
+            'collapseKey' => 'new_message',
+        ], $options->toArray());
     }
 }

@@ -96,6 +96,7 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
                     'token' => $token,
                     ...(empty($notificationJson) ? [] : ['notification' => $notificationJson]),
                     ...(empty($options->data) ? [] : ['data' => $options->data]),
+                    ...(null !== $options->collapseKey ? ['android' => ['collapse_key' => $options->collapseKey]] : []),
                 ],
             ],
         ]);
