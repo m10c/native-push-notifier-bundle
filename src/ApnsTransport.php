@@ -112,10 +112,11 @@ final class ApnsTransport extends AbstractTransport implements TexterInterface
         }
 
         if ($statusCode > 299) {
+            /** @var array{reason?: string, timestamp?: int} $res */
             $res = $response->toArray(throw: false);
             if ('Unregistered' === ($res['reason'] ?? null)) {
-                $unregisteredAt = $res['timestamp']
-                    ? \DateTimeImmutable::createFromFormat('U', sprintf('%d', floor($res['timestamp'] / 1000)))
+                $unregisteredAt = isset($res['timestamp'])
+                    ? \DateTimeImmutable::createFromFormat('U', (string) intdiv($res['timestamp'], 1000))
                     : null;
                 throw new TokenUnregisteredException(token: $token, transport: 'apns', unregisteredAt: $unregisteredAt ?: null);
             }

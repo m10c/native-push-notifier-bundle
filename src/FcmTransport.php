@@ -107,9 +107,10 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
             throw new TransportException('Could not reach the remote FCM server.', $response, 0, $e);
         }
 
+        /** @var array{error?: array{details?: list<array{errorCode?: string}>}} $res */
         $res = $response->toArray(throw: false);
 
-        if (404 === $statusCode && 'UNREGISTERED' === $res['error']['details'][0]['errorCode']) {
+        if (404 === $statusCode && 'UNREGISTERED' === ($res['error']['details'][0]['errorCode'] ?? null)) {
             throw new TokenUnregisteredException(token: $token, transport: 'fcm');
         }
 
@@ -117,8 +118,10 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
             throw new TransportException("Unable to send the Push to token: {$token}, FCM responded with {$statusCode}.", $response);
         }
 
+        /** @var array{name?: string} $responseArr */
         $responseArr = $response->toArray();
-        if (!isset($responseArr['name']) || !str_contains($responseArr['name'], '/messages/')) {
+
+        if (!str_contains($responseArr['name'] ?? '', '/messages/')) {
             throw new TransportException('Unexpected FCM response when sending the push', $response);
         }
 
