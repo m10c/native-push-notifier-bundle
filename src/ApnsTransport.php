@@ -88,19 +88,31 @@ final class ApnsTransport extends AbstractTransport implements TexterInterface
             throw new InvalidArgumentException(sprintf('The "%s" transport requires an HttpClient.', __CLASS__));
         }
 
+        $priorityValue = match ($options->priority ?? null) {
+            NativePushPriority::High => '10',
+            NativePushPriority::Normal => '5',
+            NativePushPriority::Low => '1',
+            null => null,
+        };
+
+        /** @var mixed[][] */
+        $apsJson = [];
+        if ('' !== $message->getSubject()) {
+            $apsJson['alert']['title'] = $message->getSubject();
+        }
+        if ('' !== $message->getContent()) {
+            $apsJson['alert']['body'] = $message->getContent();
+        }
+
         $response = $this->client->request('POST', $endpoint, [
             'headers' => [
                 'apns-topic' => $this->topic,
                 'authorization' => "bearer {$jwt}",
                 ...(null !== $options->collapseKey ? ['apns-collapse-id' => $options->collapseKey] : []),
+                ...($priorityValue ? ['apns-priority' => $priorityValue] : []),
             ],
             'json' => [
-                'aps' => [
-                    'alert' => [
-                        'title' => $message->getSubject(),
-                        'body' => $message->getContent(),
-                    ],
-                ],
+                ...(empty($apsJson) ? [] : ['aps' => $apsJson]),
                 ...$options->data,
             ],
         ]);

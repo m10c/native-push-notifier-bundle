@@ -86,18 +86,32 @@ final class FcmTransport extends AbstractTransport implements TexterInterface
             $notificationJson['body'] = $message->getContent();
         }
 
+        /** @var mixed[][] */
+        $messageJson = [
+            'token' => $token,
+            ...(empty($notificationJson) ? [] : ['notification' => $notificationJson]),
+            ...(empty($options->data) ? [] : ['data' => $options->data]),
+        ];
+
+        if (null !== $options->collapseKey) {
+            $messageJson['android']['collapse_key'] = $options->collapseKey;
+        }
+
+        if (null !== $options->priority) {
+            $messageJson['android']['priority'] = match ($options->priority) {
+                NativePushPriority::High => 'HIGH',
+                NativePushPriority::Normal,
+                NativePushPriority::Low => 'NORMAL',
+            };
+        }
+
         $response = $this->client->request('POST', $endpoint, [
             'headers' => [
                 'Authorization' => "Bearer {$accessToken}",
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'message' => [
-                    'token' => $token,
-                    ...(empty($notificationJson) ? [] : ['notification' => $notificationJson]),
-                    ...(empty($options->data) ? [] : ['data' => $options->data]),
-                    ...(null !== $options->collapseKey ? ['android' => ['collapse_key' => $options->collapseKey]] : []),
-                ],
+                'message' => $messageJson,
             ],
         ]);
 
